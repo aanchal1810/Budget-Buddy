@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pie Chart - Expense Breakdown</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='logo.ico')}}">
+    <style>
+
+        body {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            background-color: #040811;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pie {
+            margin-left: 6.5%;
+            margin-top: 2%;
+            display: flex;
+            flex-direction: row;
+            width: 45%;
+            height: 250px;
+        }
+        #monthly{
+            height: 400px !important;
+            margin-left: 6.5%;
+            margin-bottom: 5%;
+            margin-top: 1%;
+            max-width: 1200px;
+
+        }
+        .space{
+            height: 50px;
+        }
+        #yearly{
+            display: none;
+            margin-left: 3%;
+            margin-bottom: 5%;
+            margin-top: 2%;
+        }
+        canvas{
+            background-color: #45484d;
+            border-radius: 10px;
+            padding: 3%;
+        }
+        select{
+        font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 25px;
+            width: 200px;
+            background-color: #94ade6;
+            color: #040811;
+            padding: 5%;
+            border: 1px solid #040811;
+            box-shadow: none;
+        }
+
+        .content1{
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            display: none;
+            position: absolute;
+            min-height: 200px;
+            background-color: #040811;
+            color: #040811;
+            border-radius: 10px;
+            padding: 1%;
+            z-index: 1;
+            width: 120px;
+        }
+        .content2{
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            display: none;
+            position: absolute;
+            min-height: 200px;
+            background-color: #040811;
+            color: #040811;
+            border-radius: 10px;
+            padding: 1%;
+            z-index: 1;
+            width: 120px;
+        }
+        option{
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            cursor: pointer;
+            padding: 3%;
+            background-color: #94ade6;
+            margin-top: 3%;
+            border-radius: 5px;
+            max-width: 500px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        #yearly-btn{
+
+            margin-left: 10%;
+        }
+
+        #graphReport{
+            margin-top: 2%;
+            display: flex;
+            align-self: center;
+        }
+        button{
+
+            border-radius: 50px;
+            width: 50px;
+            height: 50px;
+            margin-left: 8%;
+            background-color: #040811;
+            border:none;
+        }
+        button>span{
+            margin-left: 0;
+        }
+        #tick{
+            object-fit: cover;
+            border-radius: 50px;
+            width: 50px;
+            height: 50px;
+            margin-left: 0;
+        }
+        @media (max-width: 600px) {
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+ 
+            .pie {
+                margin-left: 7% !important;
+                margin: auto;
+                display: flex;
+                flex-direction: column;
+                width: 80%;
+                height: 300px;
+            }
+ 
+            #expense {
+                width: 80%;
+                height: 200px !important;
+            }
+ 
+            #income {
+                margin-top: 5%;
+                width: 80%;
+                height: 200px !important;
+            }
+ 
+            #monthly {
+                margin-left: 7% !important;
+                margin-top: 5%;
+                width: 80% !important;
+                height: 400px !important;
+                
+            }
+            .space{
+                height: 150px;
+            }
+            #graphReport{
+                margin-bottom: 4%;
+                justify-content: center;
+            }
+            
+            #monthly-btn{
+                height: 50px;
+                width: 150px;
+                font-size: 1rem;
+            }
+            #yearly-btn{
+                margin-left: 7%;
+                height: 50px;
+                width: 120px;
+                font-size: 1rem;
+            }
+            #sub{
+                height: 40px;
+                width: 40px;
+                margin-left: 3%;
+                background: none;
+                align-self: center;
+
+            }
+            #tick{
+                height: 40px;
+                width: 40px;
+            }
+        }
+    </style>
+</head>
+  {% include "navbar.html" %}
+<body>
+
+    <form id="graphReport" method="POST">
+        <div class="dropdown1">
+            <select id="monthly-btn" type="button" name="months" >
+                <option value="" selected disabled>{{month}}</option>
+                <option  value="1">January</option>
+                <option  value="2">February</option>
+                <option  value="3">March</option>
+                <option  value="4">April</option>
+                <option  value="5">May</option>
+                <option  value="6">June</option>
+                <option  value="7">July</option>
+                <option  value="8">August</option>
+                <option  value="9">September</option>
+                <option  value="10">October</option>
+                <option  value="11">November</option>
+                <option  value="12">December</option>
+            </select>
+        </div>
+        <div class="dropdown2">
+            <select id="yearly-btn" name="years">
+                <option  value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option  value="2026">2026</option>
+                <option  value="2027">2027</option>
+                <option  value="2028">2028</option>
+                <option  value="2029">2029</option>
+                <option  value="2030">2030</option>
+                <option  value="2031">2031</option>
+                <option  value="2032">2032</option>
+                <option  value="2033">2033</option>
+                <option  value="2034">2034</option>
+                <option  value="2034">2035</option>
+            </select>
+
+        </div>
+
+        <button type="submit" id="sub"><span><img id="tick" src="{{url_for('static', filename='tick.png')}}"/></span></button>
+    </form>
+        <div class="pie">
+        <canvas id="expense" style="width:100%;max-width:600px"></canvas>
+        <canvas id="income" style="width:100%;max-width:600px; margin-left:2%;"></canvas>
+    </div>
+    <div class="space"></div>
+    <canvas id="monthly" style="width:100%;"></canvas>
+
+    <script>
+        const xValues = ["Household", "Food", "Social Life", "Transport", "Health", "Education", "Apparel","Other"];
+        const yValues = [{{Household}}, {{Food}}, {{Social_life}}, {{Transport}}, {{Health}}, {{Education}}, {{Apparel}}, {{Other_ex}}];
+        const barColors = [
+            "#ef718a",
+            "#d02ee5",
+            "#FF6933",
+            "#ffff18",
+            "#ff5a5a",
+            "#4af4b2",
+            "#b7f500",
+            "#fa1c80"
+        ];
+
+        new Chart("expense", {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    fontColor: '#e1e7f8',
+                    fontFamily: 'Poppins, sans-serif',
+                    fontSize: 20,
+                    text: "Expense"
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#e1e7f8',
+                        fontSize: 15,
+                        fontFamily: 'Poppins, sans-serif'
+                    }
+                }
+            }
+        });
+
+        const xValues1 = ["Allowance", "Bonus", "Salary", "Other"];
+        const yValues1 = [{{Allowance}}, {{Bonus}}, {{Salary}}, {{Other}}];
+        const barColors1 = [
+            "#fa1c80",
+            "#d02ee5",
+            "#b7f500",
+            "#4af4b2"
+        ];
+
+        new Chart("income", {
+            type: "pie",
+            data: {
+                labels: xValues1,
+                datasets: [{
+                    backgroundColor: barColors1,
+                    data: yValues1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    fontColor: '#e1e7f8',
+                    fontSize: 20,
+                    fontFamily: 'Poppins, sans-serif',
+                    text: "Income"
+                },
+                legend: {
+                    labels: {
+                        fontColor: '#e1e7f8',
+                        fontFamily: 'Poppins, sans-serif',
+                        fontSize: 15
+                    }
+                }
+            }
+        });
+
+        var barChartData = {
+            labels: [
+                "Week 1",
+                "Week 2",
+                "Week 3",
+                "Week 4"
+            ],
+            datasets: [
+                {
+                    label: "Income",
+                    backgroundColor: "#82f147",
+                    data: [{{income_per_week[0]}}, {{income_per_week[1]}}, {{income_per_week[2]}}, {{income_per_week[3]}}]
+                },
+                {
+                    label: "Expense",
+                    backgroundColor: "#ff6a75",
+                    data: [{{expense_per_week[0]}}, {{expense_per_week[1]}}, {{expense_per_week[2]}}, {{expense_per_week[3]}}]
+                }
+            ]
+        };
+
+        var chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                labels: {
+                        fontColor: '#e1e7f8',
+                        fontSize: 18,
+                        fontFamily: 'Poppins, sans-serif'
+                    },
+                position: "top"
+            },
+            title: {
+                display: true,
+                fontColor: '#e1e7f8',
+                fontSize: 25,
+                text: "Montly Assessment",
+                fontFamily: 'Poppins, sans-serif'
+            },
+            
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontColor: '#e1e7f8',
+                        fontSize: 18,
+                        fontFamily: 'Poppins, sans-serif'
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        fontColor: '#e1e7f8',
+                        fontSize: 18,
+                        fontFamily: 'Poppins, sans-serif'
+                    }
+                }]
+            }
+        }
+
+
+
+        window.onload = function () {
+            var ctx = document.getElementById("monthly").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: "bar",
+                data: barChartData,
+                options: chartOptions
+            });
+
+            var ctx1 = document.getElementById("yearly").getContext("2d");
+            window.myBar1 = new Chart(ctx1, {
+                type: "bar",
+                data: barChartData1,
+                options: chartOptions1
+            });
+        };
+
+    </script>
+</body>
+</html>
