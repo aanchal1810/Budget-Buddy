@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>FinBot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.1.2/dist/typography.min.css" />
+  <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='logo.ico')}}">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      background-color: #040811;
+      color: #e1e7f8;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .chat {
+      margin-top: 3%;
+      width: 840px;
+      background-color: #5c1d7e;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      height: 30rem;
+      border-radius: 10px;
+    }
+
+    .finbot {
+      display: flex;
+      flex-direction: row;
+      width: 840px;
+    }
+
+    #prompt {
+      background-color: #913ac0;
+      color: #040811;
+      width: 700px;
+      height: 50px;
+      border: none;
+      font-size: 20px;
+      padding: 20px;
+      border-bottom-left-radius: 10px;
+      color: #040811;
+    }
+
+    #ask {
+      font-family: "Poppins", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      width: 100px;
+      height: 90px;
+      font-size: 25px;
+      border-bottom-right-radius: 10px;
+      border: none;
+      background-color: #94ADE6;
+      color: #040811;
+    }
+
+    .output {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #answer {
+      width: 800px;
+      height: 250px;
+      border: none;
+      font-size: 20px;
+      padding: 20px;
+      background-color: #5c1d7e;
+      color: #040811;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    #send {
+      height: 88px;
+      width: 80px;
+      align-self: center;
+    }
+
+    #botimg {
+      height: 70px;
+      width: 70px;
+      border-radius: 50px;
+      margin-top: -6px;
+    }
+
+    .botprof {
+      background-color: #913ac0;
+      width: 800px;
+      height: 60px;
+      padding: 20px;
+      color: #040811;
+      display: flex;
+      align-items: center;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    #botName{
+      margin-left: 5%;
+      font-size: 2rem;
+    }
+    @media (max-width: 600px){
+      .chat{
+        margin-top: 35%;
+        width: 90%;
+        background-color:#040811;
+        display: flex;
+      }
+      .finbot{
+        display: flex;
+        width: 102%;
+        align-items: center;
+        justify-content: center;
+      }
+      .botprof{
+        width: 90%;
+        margin: 0;
+      }
+      .output{
+        width: 90%;
+      }
+      #answer{
+        width: 90%;
+        height: 450px;
+      }
+      #prompt{
+        width: 100%;
+      }
+      #ask{
+        width: 30%;
+        margin: auto;
+        
+      }
+      #send{
+        width: 80%;
+      }
+      #botName{
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+{% include "navbar.html" %}
+
+<body>
+  <div class="chat">
+    <div class="output">
+      <div class="botprof">
+        <img id="botimg" src="{{url_for('static', filename='finn.jpg')}}">
+        <h2 id="botName">FinBot Here</h2>
+      </div>
+      <div class="answer" id="answer"></div>
+      <form action="">
+        <div class="finbot">
+          <input id="prompt" name="prompt" placeholder="Enter your questions here" type="textarea" />
+          <button id="ask" type="button"><span><img id="send" src="{{url_for('static', filename='tick.png')}}"
+                alt=""></span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+
+</script>
+  <script type="module">
+    import remarkHtml from "https://esm.sh/remark-html@16?bundle";
+    import remarkParse from "https://esm.sh/remark-parse@11";
+    import { unified } from "https://esm.sh/unified@11?bundle";
+    import { GoogleGenerativeAI } from "@google/generative-ai";
+    // Fetch your API_KEY
+    const API_KEY = "AIzaSyCvPc9O0xtMcJPp4dUvYepqfReWtSsAx0I";
+    // Access your API key (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+    const chat = model.startChat({
+      history: [
+        {
+          role: "user",
+          parts: [
+            {
+              content: "I've provided information about my recent income and expenses (including dates, amounts, categories, and payment methods).",
+              type: "text",
+            },
+            {
+              content: "Considering my current financial goals, can you analyze my spending and suggest ways to optimize my budget to achieve those goals?",
+              type: "text",
+            },
+            {
+              content: "Also, please answer all the questions asked by the user.",
+              type: "text",
+            },
+            {
+              content: "Do markup for table in html, never pass the 'id' and 'hello' column to the user",
+              type: "text",
+            }
+          ]
+        },
+        {
+          role: "model",
+          parts: [
+            {
+              content: "Sure, I will help you out.",
+              type: "text",
+            }
+          ]
+        }
+      ]
+    });
+    const passdata = JSON.stringify({{ passdata | tojson | safe }});
+
+    console.log(passdata)
+    document.getElementById("ask").addEventListener("click", async () => {
+      let prompt = document.getElementById("prompt").value;
+      prompt = prompt + passdata
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      console.log(text);
+      const file = await unified()
+        .use(remarkParse)
+        .use(remarkHtml)
+        .process(response.text());
+      document.querySelector("#answer").innerHTML = file;
+      sendMessageButton.disabled = false;
+      sendMessageButton.textContent = "Button";
+    });
+
+  </script>
+</body>
+
+</html>
