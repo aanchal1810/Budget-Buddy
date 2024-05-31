@@ -1,5 +1,5 @@
-# Expense-Tracker-
-This Expense Tracker application is a comprehensive tool designed to help users manage their finances effectively. It features a landing page, transaction history page, graph analysis page, calendar page for date-wise transactions, and a chatbot for finance-related queries. Built using Flask, HTML, CSS, and JavaScript, this application aims to provide a user-friendly interface and robust functionality for tracking and analyzing expenses.
+# Budget-Buddy-
+This is a Expense Tracker application that is a comprehensive tool designed to help users manage their finances effectively. It features a landing page, transaction history page, graph analysis page, calendar page for date-wise transactions, and a chatbot for finance-related queries. Built using Flask, HTML, CSS, and JavaScript, this application aims to provide a user-friendly interface and robust functionality for tracking and analyzing expenses.
 
 Features:
 
