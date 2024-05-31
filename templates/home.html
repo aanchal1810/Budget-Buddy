@@ -50,61 +50,6 @@
             $("#hiddenmenu").toggle(300);
         });
     });
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-
-    var dateDivs = document.querySelectorAll('[id^="date-div-"]');
-    dateDivs.forEach(function (dateDiv) {
-        var outputDiv = dateDiv.querySelector('.output');
-        var outputDivHeight = outputDiv.clientHeight;
-        dateDiv.style.height = (outputDivHeight + 50) + 'px';
-    });
-    var payType = document.getElementById("pay-type-btn");
-    var expenseForm = document.getElementById("form-expense");
-    var incomeForm = document.getElementById("form-income");
-    $("#pay-type-btn").hide();
-    $("#form-income").hide();
-    $("#form-expense").hide();
-
-
-    $("#income-btn").click(function () {
-        $("#form-income").toggle();
-        $("#form-expense").hide();
-
-    });
-    $("#expense-btn").click(function () {
-        $("#form-expense").toggle();
-        $("#form-income").hide();
-
-    });
-
-    // $("#button").click(function () {
-    //     $("#pay-type-btn").toggle();
-    // });
-    function openType() {
-        payType.style.display = "flex";
-    }
-    // function openIncome(){
-    //     expenseForm.style.display = "none";
-    //     incomeForm.style.display = "block";
-    //     payType.style.display = "none";
-    // }
-    // function openExpense(){
-    //     incomeForm.style.display = "none";
-    //     expenseForm.style.display = "block";
-    //     payType.style.display = "none";
-    // }
-    function closeit() {
-        payType.style.display = "flex";
-        expenseForm.style.display = "none";
-        incomeForm.style.display = "none";
-    }
-    function closemain() {
-        payType.style.display = "none";
-    }
-
-
 
 
 
@@ -324,6 +269,62 @@
 
 
 </body>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
 
+    var dateDivs = document.querySelectorAll('[id^="date-div-"]');
+    dateDivs.forEach(function (dateDiv) {
+        var outputDiv = dateDiv.querySelector('.output');
+        var outputDivHeight = outputDiv.clientHeight;
+        dateDiv.style.height = (outputDivHeight + 50) + 'px';
+    });
+    var payType = document.getElementById("pay-type-btn");
+    var expenseForm = document.getElementById("form-expense");
+    var incomeForm = document.getElementById("form-income");
+    $("#pay-type-btn").hide();
+    $("#form-income").hide();
+    $("#form-expense").hide();
+
+
+    $("#income-btn").click(function () {
+        $("#form-income").toggle();
+        $("#form-expense").hide();
+
+    });
+    $("#expense-btn").click(function () {
+        $("#form-expense").toggle();
+        $("#form-income").hide();
+
+    });
+
+    // $("#button").click(function () {
+    //     $("#pay-type-btn").toggle();
+    // });
+    function openType() {
+        payType.style.display = "flex";
+    }
+    // function openIncome(){
+    //     expenseForm.style.display = "none";
+    //     incomeForm.style.display = "block";
+    //     payType.style.display = "none";
+    // }
+    // function openExpense(){
+    //     incomeForm.style.display = "none";
+    //     expenseForm.style.display = "block";
+    //     payType.style.display = "none";
+    // }
+    function closeit() {
+        payType.style.display = "flex";
+        expenseForm.style.display = "none";
+        incomeForm.style.display = "none";
+    }
+    function closemain() {
+        payType.style.display = "none";
+    }
+
+
+</script>
 
 </html>
