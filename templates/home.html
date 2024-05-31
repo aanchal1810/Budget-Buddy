@@ -15,28 +15,50 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-        
+
 </head>
-<style>
-    #button {
-        font-size: 1.8rem;
-        position: fixed;
-        bottom: 7rem;
-        left: 1%;
-        font-family: "Poppins", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        z-index: 20;
-        width: 250px;
-        font-weight: bolder;
-        border-radius: 20px;
-        padding: 10px 20px;
-    }
-</style>
+<script>$(document).ready(function () {
+        $(".flex-slide").each(function () {
+            $(this).hover(
+                function () {
+                    $(this).find(".flex-title").css({
+                        transform: "rotate(0deg)",
+                        top: "5%"
+                    });
+                    $(this).find(".flex-about").css({
+                        opacity: "1"
+                    });
+                },
+                function () {
+                    $(this).find(".flex-title").css({
+                        transform: "rotate(90deg)",
+                        top: "15%"
+                    });
+                    $(this).find(".flex-about").css({
+                        opacity: "0"
+                    });
+                }
+            );
+        });
+    });
+
+    $(document).ready(function () {
+        $("#menuicon").click(function () {
+            $(this).css({
+                'transform': $(this).css('transform') === 'none' ? 'rotate(90deg)' : 'none',
+                'transition': 'transform 0.5s ease-in-out'
+
+            });
+            $("#hiddenmenu").toggle(300);
+        });
+    });
+
+
+
+</script>
 
 <body>
     {%include "navbar.html "%}
-
     <div class="pay-type-btn" id="pay-type-btn">
         <div class="expense-income-div">
             <button id="income-btn" name="flag">
@@ -115,78 +137,70 @@
         </form>
     </div>
 
-    <div id="main" style="border-radius: 1rem; background-color:black; width:100%; height:560px;margin-top:0">
+    <div id="main">
         <div class="all-buttons">
-            <button id="button" onclick="openType()">ADD
-            </button>
-            <div class="content_income" style="margin-left: 0px; text-align: center;">
-
+            <div class="content_income">
                 {% block totali%}
                 <br>
                 <span class="shiny"></span>
-                <h2 style="position: relative; display: inline; color: white; position:relative;color:white;">INCOME:
+                <h2 class="title-card" style="position: relative; display: inline; color: white; position:relative;color:white;">INCOME:
                     <span>₹</span>{{ totali }}
                 </h2>
                 {% endblock %}{% block totale%}
             </div>
-            <div class="content_expense" style="margin-left:0px;text-align: center;">
+            <div class="content_expense">
                 <span class="shiny"></span>
                 <br>
-                <h2 style="position: relative; display: inline;color: white">EXPENSE: <span>₹</span>{{ totale }}</h2>
+                <h2 class="title-card" style="position: relative; display: inline;color: white">EXPENSE: <span>₹</span>{{ totale }}</h2>
                 {% endblock %} {% block balance%}
             </div>
-            <div class="content_balance" style="margin-left: 0px;text-align: center;margin-top:1rem">
+            <div class="content_balance">
                 <span class="shiny"></span>
                 <br>
-                <h2 style="position: relative; display: inline;color: white">BALANCE: <span>₹</span> {{ balance }}</h2>
+                <h2 class="title-card" style="position: relative; display: inline;color: white">BALANCE: <span>₹</span> {{ balance }}</h2>
             </div>
+            <button id="add-button" onclick="openType()">ADD
+            </button>
             {% endblock %}
         </div>
-        <div id="scrollable-div"
-            style="display: grid;background-color:black;  overflow-y: scroll; height: 550px; width: 80%;margin-top: 0px;position:fixed;left:19%;top:7.5rem;border-radius:20px ">
-
+        <div id="scrollable-div">
             {% for date, items in dates.items() %}
-            <div id="date-div-{{ loop.index }}"
-                style="display: grid;background-color: black; color:black;height: 100px; width: 99%;;margin-bottom: 0px; justify-self:center ">
-
-                <p id="date1"
-                    style="color:white;margin-top:1rem;justify-self:center;font-size:1.5rem;font-weight:600;width:300px;position:relative;left:4%">
-                    Date: {{ date }}</p>
-                <div class="output" id="output-{{ loop.index }}" style="width:600px;position:relative;left:9%;">
+            <div  class="date-div" id="date-div-{{ loop.index }}">
+                <p id="date1">Date: {{ date }}</p>
+                <div class="output" id="output-{{ loop.index }}">
                     {% for item in items %}
-                    <div class="main-container{{ loop.index }}" id="main-container">
+                    <div class="main-container{{ loop.index }}" id="main-container1">
                         {%if item['Type']=='income'%}
-                        <div class="kl" style="background-color: green">
-
-                        </div>
+                        <div class="kl" style="background-color: green"></div>
                         {%else%}
-                        <div class="kl" style="background-color: red">
-
-                        </div>
+                        <div class="kl" style="background-color: red"></div>
                         {%endif%}
                         <div id="notes-container">
                             <p id="notes">{{ item['Note'] }}</p>
-
                         </div>
                         <div id="category-container">
                             <p id="category-text">{{ item['Category'] }}
                             <p>
                         </div>
-                        <div id="mode-container">
-                            <p id="mode-text" style="color: white;">{{ item['Mode'] }}</p>
+                        <div class="mode-amount">
+                            <div id="mode-container">
+                                <p id="mode-text" style="color: white;">{{ item['Mode'] }}</p>
+                            </div>
+                            <div id="amount-container">
+                                <p id="amount"><span>₹</span>{{ item['Amounts'] }}</p>
+                            </div>
                         </div>
-                        <div id="amount-container">
-                            <p id="amount"><span>₹</span>{{ item['Amounts'] }}</p>
+                        
+                        <div id="delete-form">
+                            <form method="POST" class="cross">
+                                <input type="text" class="delete-form" id="index-flag" name="flag" value="{{item['hello']}}"
+                                    style="display:none">
+                                <button type="submit" class="delete-div" data-index="{{ loop.index }}"><span>&#10008</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
-                    <div id="delete-form">
-                        <form method="POST" class="cross">
-                            <input type="text" class="delete-form" id="index-flag" name="flag" value="{{item['hello']}}"
-                                style="display:none">
-                            <button type="submit" class="delete-div" data-index="{{ loop.index }}"><span>&#10008</span>
-                            </button>
-                        </form>
-                    </div>
+                    
                     {% endfor %}
                 </div>
             </div>
@@ -310,7 +324,6 @@
     }
     function closemain() {
         payType.style.display = "none";
-
     }
 
 
