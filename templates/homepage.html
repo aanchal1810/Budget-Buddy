@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Buddy</title>
+  <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='logo.ico')}}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='homepage.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="{{url_for('static', filename='homepage.js')}}"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+</head>
+<script src="codepen.js"></script>
+<script>
+
+</script>
+
+<body>
+  <div class="navbar">
+    <a id="menuicon" href="#"><i class="fa-solid fa-bars fa-xl"></i></a>
+    <div class="mainlogo">
+      <p class="budget">Budget</p>
+      <a><img id="logo" src="{{url_for('static', filename='BudgetBuddy_black.png')}}"></a>
+      <p class="buddy">Buddy</p>
+    </div>
+  </div>
+  <div id="hiddenmenu">
+    <div id="hiddenmenu1">
+
+
+      <br>
+      <div><a href="{{url_for('home',id=id)}}" class="dashboard">Tracker</a></div>
+      <br><br>
+      <div><a href="{{url_for('cal',id=id)}} ">Calendar</a></div>
+      <br><br>
+      <div><a href="{{url_for('graph',id=id)}}" style="margin-left: 17px;">Graphs And Stats</a></div>
+      <br><br>
+      <div><a href="{{url_for('finbot',id=id)}}" style="margin-left: 17px;">Finbot</a></div>
+      <br><br>
+      <div><a href="{{url_for('aboutus',id=id)}}">About Us</a></div>
+      <br><br>
+      <div><a href="{{url_for('logout',id=id)}}">Log Out</a></div>
+      <br>
+    </div>
+    <br>
+
+    <h4 style="color: white;margin-left: 40px; font-size:x-large; ">Follow Us</h4>
+    <div class="underline"><span></span></div>
+    <br><br><br>
+    <a class="social" href="#"><i class="fab fa-facebook-f"></i></a>
+    <a class="social" href="#"><i class="fab fa-twitter"></i></a>
+    <a class="social" href="#"><i class="fab fa-instagram"></i></a>
+    <a class="social" href="#"><i class="fab fa-linkedin-in"></i></a>
+    <a class="social" href="#"><i class="fa-brands fa-whatsapp"></i></a>
+
+
+  </div>
+
+
+  <div class="flex-container">
+    <a>
+    <div  onclick="location.href='{{url_for('home',id=id)}}'" class="flex-slide home">
+      <a style="text-decoration:none">
+        <div class="flex-title flex-title-home">
+          <P>Tracker</P>
+        </div>
+      </a>
+
+    </div>
+    <div onclick="location.href='{{url_for('cal',id=id)}}'" class="flex-slide about">
+      <a style="text-decoration:none">
+        <div class="flex-title" style="margin-top: 10px;">
+          <p>Calendar</p>
+        </div>
+      </a>
+
+    </div>
+    <div onclick="location.href='{{url_for('graph',id=id)}}'" class="flex-slide work">
+      <a style="text-decoration:none">
+        <div class="flex-title">
+          <p>Graphs</p>
+        </div>
+      </a>
+
+    </div>
+
+    <div onclick="location.href='{{url_for('finbot',id=id)}}'" class="flex-slide contact">
+
+      <a  style="text-decoration:none">
+        <div class="flex-title">
+          <p>Finbot</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+ 
+</body>
+
+
+
+</html>
