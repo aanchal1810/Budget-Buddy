@@ -89,81 +89,79 @@ def dashboard(id):
 
 @app.route('/home/<id>', methods=["GET", "POST"])
 def home(id):
-    try:
-        if f"name_{id}" in session:
-            name = session[f"name_{id}"]
-            firstfetch = index = flag1 = money = date1 = rupees = category = note = mode = totali = totale = balance =year=month=day= 0
-            date2 = []
+    if f"name_{id}" in session:
+        name = session[f"name_{id}"]
+        firstfetch = index = flag1 = money = date1 = rupees = category = note = mode = totali = totale = balance =year=month=day= 0
+        date2 = []
 
-            if request.method == 'POST':
-                data = request.form
-                if 'flag' in data and (data['flag'] == 'income' or data['flag'] == 'expense'):
-                    Type = data['flag']
-                    date1 = data["date"]
-                    year, month, day = map(int, date1.split('-'))
-                    amounts = int(data["rupees"])
-                    category = data["category"]
-                    mode = data["mode"]
-                    note = data["note"]
+        if request.method == 'POST':
 
-                    if Type == 'income':
-                        sendata = supabase.table("data").insert(
-                            {"id": id, "Type": Type, "Date": date1, "Amounts": amounts, "Category": category, "Mode": mode,
-                             "Note": note, "income": amounts, "expense": 0}).execute()
-                    elif Type == 'expense':
-                        sendata = supabase.table("data").insert(
-                            {"id": id, "Type": Type, "Date": date1, "Amounts": amounts, "Category": category, "Mode": mode,
-                             "Note": note, "income": 0, "expense": amounts}).execute()
+            data = request.form
 
-                elif 'flag' in data:
-                    index = int(data['flag'])
-                    supabase.table("data").delete().eq("hello", index).execute()
+            if data['flag'] == 'income' or data['flag'] == 'expense':
 
-            firstfetch = supabase.table("data").select("*").eq("id", id).execute().data
-            if firstfetch:
-                finaldata = sorted(firstfetch, key=lambda x: x['Date'])
+                Type = data['flag']
+                date1 = data["date"]
+                year, month, day = map(int, date1.split('-'))
+                print(year,month,day)
+                amounts = int(data["rupees"])
+                category = data["category"]
+                mode = data["mode"]
+                note = data["note"]
+
+                if Type == 'income':
+                    sendata = supabase.table("data").insert(
+                        {"id": id, "Type": Type, "Date": date1, "Amounts": amounts, "Category": category, "Mode": mode,
+                         "Note": note, "income": amounts, "expense": 0}).execute()
+                if Type == 'expense':
+                    sendata = supabase.table("data").insert(
+                        {"id": id, "Type": Type, "Date": date1, "Amounts": amounts, "Category": category, "Mode": mode,
+                         "Note": note, "income": 0, "expense": amounts}).execute()
+
             else:
-                finaldata = []
+                index = int(data['flag'])
+                supabase.table("data").delete().eq("hello", index).execute()
 
-            fetchincome = supabase.table("data").select("income").eq("id", id).execute().data
-            for items in fetchincome:
-                totali += items.get('income', 0)
+        firstfetch = supabase.table("data").select("*").eq("id", id).execute().data
+        finaldata = sorted(firstfetch, key=lambda x: x['Date'])
+        print(finaldata)
 
-            fetchexpense = supabase.table("data").select("expense").eq("id", id).execute().data
-            for items in fetchexpense:
-                totale += items.get('expense', 0)
+        fetchincome = supabase.table("data").select("income").eq("id", id).execute().data
+        for items in fetchincome:
+            totali += items['income']
+        print(totali)
 
-            dates = {}
-            balance = totali - totale
-            for entry in finaldata:
-                date = entry["Date"]
-                if date not in dates:
-                    dates[date] = []
-                dates[date].append(
-                    {
-                        "id": entry["id"],
-                        "Date": entry["Date"],
-                        "Type": entry["Type"],
-                        "Amounts": entry["Amounts"],
-                        "Category": entry["Category"],
-                        "Mode": entry["Mode"],
-                        "Note": entry["Note"],
-                        "hello": entry["hello"],
-                        "income": entry["income"],
-                        "expense": entry["expense"],
-                    }
-                )
+        fetchexpense = supabase.table("data").select("expense").eq("id", id).execute().data
+        for items in fetchexpense:
+            totale += items['expense']
+        print(totale)
+        dates = {}
+        balance = totali + (-totale)
+        for entry in finaldata:
+            date = entry["Date"]
+            if date not in dates:
+                dates[date] = []
+            dates[date].append(
+                {
+                    "id": entry["id"],
+                    "Date": entry["Date"],
+                    "Type": entry["Type"],
+                    "Amounts": entry["Amounts"],
+                    "Category": entry["Category"],
+                    "Mode": entry["Mode"],
+                    "Note": entry["Note"],
+                    "hello": entry["hello"],
+                    "income": entry["income"],
+                    "expense": entry["expense"],
+                }
+            )
 
-            return render_template('home.html', type=money, date=date1, rupees=rupees, mode=mode, category=category,
-                                   note=note, dates=dates,
-                                   finaldata=finaldata, totali=totali, totale=totale, balance=balance, name=name, id=id,
-                                   year=year, month=month, day=day)
-        else:
-            return redirect(url_for("home", id=id))
-    except Exception as e:
-        # Log the exception for debugging purposes
-        print(f"Error: {e}")
-        return "An error occurred", 500
+        return render_template('home.html', type=money, date=date1, rupees=rupees, mode=mode, category=category,
+                               note=note, dates=dates,
+                               finaldata=finaldata, totali=totali, totale=totale, balance=balance, name=name, id=id,
+                               year=year, month=month, day=day)
+    else:
+        return redirect(url_for("home", id=id))
 
 
 
