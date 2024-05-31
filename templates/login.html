@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SplitWise</title>
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='icon.ico')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='register.css') }}">
+</head>
+
+<body>
+    <div id="mainlogo">
+        <p class="budget">Budget</p>
+        <a><img id="logo" src="{{url_for('static', filename='BudgetBuddy_black.png')}}"></a>
+        <p class="buddy">Buddy</p>
+    </div>
+
+
+    <div class="wrapper" id="wrapper" style="height: 370px; margin-top: 90px;">
+
+        <form action="/login" method="POST" >
+            <h1 style="text-align: center">Login</h1>
+
+           <div class="field" >
+             <input type="text" required name="username">
+             <label>User Name</label>
+          </div>
+           <div class="field" >
+              <input type="password" required name="password">
+              <label>Password</label>
+           </div>
+            <br>
+
+           <div class="field">
+              <input type="submit" value="Login">
+           </div>
+           <div class="signup-link">
+              <a href="{{url_for('user')}}" >
+                  Not a member?
+              </a>
+           </div>
+           <div class="field">
+
+          </div>
+        </form>
+     </div>
+
+      <img id="loginimg" src="{{url_for('static', filename='login.svg')}}" >
+
+
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+
+
+    $(document).ready(function() {
+
+    const logo = $('#loginimg');
+    const content=$('#wrapper');
+    // Slide in from the left after a short delay
+    setTimeout(function () {
+        logo.animate({ left: '0' }, 2000);
+    },0 );
+
+    setTimeout(function () {
+        content.animate({ left: '0' }, 2000);
+    }, );
+
+
+
+
+});
+
+
+
+</script>
+
+</html>
