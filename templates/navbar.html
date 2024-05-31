@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Buddy</title>
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='logo.ico')}}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet">
+  
+       
+</head>
+
+
+<body>
+    <script>
+  
+  $(document).ready(function() {
+  $("#menuicon").click(function() {
+      $(this).css({
+          'transform': $(this).css('transform') === 'none' ? 'rotate(90deg)' : 'none',
+          'transition': 'transform 0.5s ease-in-out'
+
+      });
+      $("#hiddenmenu").toggle(300); 
+  });
+});
+
+      </script>
+    <style>
+        i {
+            transition: 0.3s;
+            color: white;
+
+        }
+
+        i:hover {
+            transform: scale(1.2);
+        }
+        .navbar-phone{
+            display: none;
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .navbar {
+            font-size: 1.3rem;
+            height: 7rem;
+            width: 100%;
+            background-color: #0f0f0f;
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            
+        }
+
+        .navbar a {
+          
+            float: left;
+            margin-top: 40px;
+            margin-left: 120px;
+            border: none;
+            color: white;
+             margin-left: 120px;
+            margin-top: 40px; 
+            display: inline-block;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffffff;
+            transform-origin: bottom right;
+            transition: transform 0.2s ease-out;
+        }
+
+        .navbar a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+
+        #logo {
+            height: 6rem;
+             margin-top: -2rem;
+            margin-left: 60PX; 
+
+        }
+
+        #menulogo {
+            height: 120px;
+            width: 125px;
+             margin-left: 20px; 
+        }
+
+        #dashboard {
+             margin-top: 2%;
+            color: white;
+             margin-left: 4%; 
+        }
+
+        #allex {
+         margin-top: 2%; 
+            color: white;
+         margin-left: 4%; 
+
+        }
+
+        #menuicon {
+             margin-top: 2.%;
+            margin-left: 3%; 
+            color: white;
+        }
+
+       
+        #profileicon {
+            color: white;
+             margin-top: 2.2%;
+            float: right;
+            margin-right: 4.5%; 
+        }
+
+      
+        #hiddenmenu {
+  position: absolute;
+  z-index: 100;
+  display: none;
+  height: 630px;
+  width: 200px;
+  background-color: #000000;
+}
+
+        #hiddenmenu1 {
+            background-color: #0f0f0f;
+            z-index: 100;
+        }
+
+        #hiddenmenu1 a {
+            color: white;
+            width: 100px;
+            font-size: large;
+            transition: 0.3s;
+            text-decoration: none;
+            align-content: center;
+            position: relative;
+        }
+        #hiddenmenu1 div{
+            margin-left: 60px;
+            margin-top: 9px;
+        }
+
+        #hiddenmenu1 a:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color:
+                white;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+
+        }
+
+        #hiddenmenu1 a:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .social {
+            margin-left: 20px;
+            margin-top: 50px;
+        }
+
+        #hiddenmenu i:hover {
+            transform: scale(1.5);
+
+        }
+
+        .underline {
+            width: 100%;
+            height: 3px;
+            background: #000000;
+            border-radius: 3px;
+            top: 25px;
+            left: 0;
+            overflow: hidden;
+            position: relative;
+            margin-top: -45px;
+        }
+
+
+        .underline span {
+            width: 70px;
+            height: 100%;
+            background: #fff;
+            border-radius: 3px;
+            position: absolute;
+            top: 0;
+            left: 10px;
+            animation: moving 2s linear infinite;
+        }
+
+        @keyframes moving {
+            0% {
+                left: -50px;
+            }
+
+            100% {
+                left: 200px;
+            }
+
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background-color: #040811;
+        }
+
+        @media (max-width: 600px) {
+            .navbar{
+                display: none;
+            }
+            .navbar-phone {
+                display: block;
+                height: 6rem;
+                width: 100%;
+                background-color: #000000;
+                color: #fff;
+                display: flex;
+                align-items: center;
+            }
+
+            .mainlogo-phone {
+                font-size: 1.5rem;
+                display: flex;
+                justify-content: center;
+                flex-grow: 1; 
+            }
+
+            #logo-phone {
+                display: block;
+                height: 5rem;
+                width: 5rem;
+            }
+
+            #menulogo {
+                height: 160px;
+                width: 65px;
+            }
+
+            #menuicon-phone {
+                
+                margin-left: 5%;
+           
+            }
+
+            #hiddenmenu {
+                height: 100%;
+                width: 100%;
+                background-color: #303030;
+                text-align: center;
+                padding: 0;
+            }
+
+            #hiddenmenu1 {
+                margin-top: 10%;
+                background-color: #303030;
+            }
+
+            #hiddenmenu1 a {
+                width: 100%;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+
+    <body>
+        <div class="navbar-phone">
+            <a id="menuicon-phone" href="#"><i class="fa-solid fa-bars fa-xl"></i></a>
+            <div class="mainlogo-phone">
+              <p class="budget">Budget</p>
+              <a><img id="logo-phone" src="{{url_for('static', filename='BudgetBuddy_black.png')}}"></a>
+              <p class="buddy">Buddy</p>
+            </div>
+          </div>
+        <div class="navbar">
+            <a id="menuicon" href="#"><i class="fa-solid fa-bars fa-xl"></i></a>
+            <a href="{{url_for('dashboard',id=id)}}">Home</a>
+            <a href="{{url_for('home',id=id)}}">Tracker</a>
+            <a><img id="logo" src="{{url_for('static', filename='BudgetBuddy.png')}}"></a>
+            <a href="{{url_for('cal',id=id)}}">Calendar</a>
+
+            <a href="{{url_for('graph',id=id)}}">Graphs</a>
+            <a href="{{url_for('finbot',id=id)}} ">FinBot </a>
+
+
+        </div>
+        <div id="hiddenmenu">
+            <div id="hiddenmenu1">
+
+
+                <br>
+                <div ><a href="{{url_for('home',id=id)}}" class="dashboard">Tracker</a></div>
+                <br><br>
+                <div><a href="{{url_for('cal',id=id)}} ">Calendar</a></div>
+                <br><br>
+                <div style="margin-left: 13px;"><a href="{{url_for('graph',id=id)}}" style="margin-left: 17px;">Graphs
+                        And Stats</a></div>
+                <br><br>
+                <div><a href="{{url_for('finbot',id=id)}}"
+                        style="margin-left: 17px;">Finbot</a></div>
+                <br><br>
+                <div><a href="{{url_for('aboutus',id=id)}}">About Us</a></div>
+                <br><br>
+                <div><a href="{{url_for('logout',id=id)}}">Log Out</a></div>
+                <br>
+            </div>
+            <br>
+
+            <h4 style="color: white;margin-left: 40px; font-size:x-large; ">Follow Us</h4>
+            <div class="underline"><span></span></div>
+            <br><br><br>
+            <a class="social" href="#"><i class="fab fa-facebook-f"></i></a>
+            <a class="social" href="#"><i class="fab fa-twitter"></i></a>
+            <a class="social" href="#"><i class="fab fa-instagram"></i></a>
+            <a class="social" href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a class="social" href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+    </body>
+
+</html>
