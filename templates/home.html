@@ -15,47 +15,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-
+        
 </head>
-<script>$(document).ready(function () {
-        $(".flex-slide").each(function () {
-            $(this).hover(
-                function () {
-                    $(this).find(".flex-title").css({
-                        transform: "rotate(0deg)",
-                        top: "5%"
-                    });
-                    $(this).find(".flex-about").css({
-                        opacity: "1"
-                    });
-                },
-                function () {
-                    $(this).find(".flex-title").css({
-                        transform: "rotate(90deg)",
-                        top: "15%"
-                    });
-                    $(this).find(".flex-about").css({
-                        opacity: "0"
-                    });
-                }
-            );
-        });
-    });
-
-    $(document).ready(function () {
-        $("#menuicon").click(function () {
-            $(this).css({
-                'transform': $(this).css('transform') === 'none' ? 'rotate(90deg)' : 'none',
-                'transition': 'transform 0.5s ease-in-out'
-
-            });
-            $("#hiddenmenu").toggle(300);
-        });
-    });
-
-
-
-</script>
 <style>
     #button {
         font-size: 1.8rem;
@@ -76,24 +37,18 @@
 <body>
     {%include "navbar.html "%}
 
-
-    <button id="button">ADD
-    </button>
-
-
     <div class="pay-type-btn" id="pay-type-btn">
-
-        <button id="income-btn" name="flag"
-            style="width: 10%; height: 5%; margin-left: 0px; margin-top: 0%; position:fixed; top:1rem; left:39%;">
-            <span class="shiny"></span>
-            Income
-        </button>
-        <br>
-        <button id="expense-btn" name="flag"
-            style="width: 10%; height: 5%; margin-left: 0px; margin-top: 0%;position:fixed; top:1rem; left:52%;">
-            <span class="shiny"></span>
-            Expense
-        </button>
+        <div class="expense-income-div">
+            <button id="income-btn" name="flag">
+                <span class="shiny"></span>
+                Income
+            </button>
+            <br>
+            <button id="expense-btn" name="flag">
+                <span class="shiny"></span>
+                Expense
+            </button>
+        </div>
         <span id="band" onclick="closemain()">x</span>
     </div>
     <div class="main-container" id="form-expense" method="POST">
@@ -160,30 +115,33 @@
         </form>
     </div>
 
-
     <div id="main" style="border-radius: 1rem; background-color:black; width:100%; height:560px;margin-top:0">
-        <div class="content_income" style="margin-left: 0px; text-align: center;">
+        <div class="all-buttons">
+            <button id="button" onclick="openType()">ADD
+            </button>
+            <div class="content_income" style="margin-left: 0px; text-align: center;">
 
-            {% block totali%}
-            <br>
-            <span class="shiny"></span>
-            <h2 style="position: relative; display: inline; color: white; position:relative;color:white;">INCOME:
-                <span>₹</span>{{ totali }}
-            </h2>
-            {% endblock %}{% block totale%}
+                {% block totali%}
+                <br>
+                <span class="shiny"></span>
+                <h2 style="position: relative; display: inline; color: white; position:relative;color:white;">INCOME:
+                    <span>₹</span>{{ totali }}
+                </h2>
+                {% endblock %}{% block totale%}
+            </div>
+            <div class="content_expense" style="margin-left:0px;text-align: center;">
+                <span class="shiny"></span>
+                <br>
+                <h2 style="position: relative; display: inline;color: white">EXPENSE: <span>₹</span>{{ totale }}</h2>
+                {% endblock %} {% block balance%}
+            </div>
+            <div class="content_balance" style="margin-left: 0px;text-align: center;margin-top:1rem">
+                <span class="shiny"></span>
+                <br>
+                <h2 style="position: relative; display: inline;color: white">BALANCE: <span>₹</span> {{ balance }}</h2>
+            </div>
+            {% endblock %}
         </div>
-        <div class="content_expense" style="margin-left:0px;text-align: center;">
-            <span class="shiny"></span>
-            <br>
-            <h2 style="position: relative; display: inline;color: white">EXPENSE: <span>₹</span>{{ totale }}</h2>
-            {% endblock %} {% block balance%}
-        </div>
-        <div class="content_balance" style="margin-left: 0px;text-align: center;margin-top:1rem">
-            <span class="shiny"></span>
-            <br>
-            <h2 style="position: relative; display: inline;color: white">BALANCE: <span>₹</span> {{ balance }}</h2>
-        </div>
-        {% endblock %}
         <div id="scrollable-div"
             style="display: grid;background-color:black;  overflow-y: scroll; height: 550px; width: 80%;margin-top: 0px;position:fixed;left:19%;top:7.5rem;border-radius:20px ">
 
@@ -193,7 +151,7 @@
 
                 <p id="date1"
                     style="color:white;margin-top:1rem;justify-self:center;font-size:1.5rem;font-weight:600;width:300px;position:relative;left:4%">
-                    Date: {{ day }}/{{ month }}/{{ year }}</p>
+                    Date: {{ date }}</p>
                 <div class="output" id="output-{{ loop.index }}" style="width:600px;position:relative;left:9%;">
                     {% for item in items %}
                     <div class="main-container{{ loop.index }}" id="main-container">
@@ -237,6 +195,67 @@
     </div>
     </div>
     </div>
+
+
+
+
+
+    <!--    <div id="main-div">-->
+    <!--         style="display: grid; background-color:  rgb(0, 0, 0);  height: 600px; width: 99%;">-->
+
+
+
+    <!--        <div id="scrollable-div"-->
+    <!--             style="display: grid;background-color: rgb(0, 0, 0);  overflow-y: scroll; height: 580px; width: 77%;justify-self: center; align-self: center;margin-top: 0px; ">-->
+
+    <!--            {% for date, items in dates.items() %}-->
+    <!--            <div id="date-div-{{ loop.index }}"-->
+    <!--                 style="display: grid;background-color: rgb(0, 0, 0); height: 200px; width: 65%;float: left;margin-bottom: 00px; ">-->
+
+    <!--                <p id="date1" style="color:white;">Date: {{ date }}</p>-->
+    <!--                <div class="output" id="output-{{ loop.index }}" >-->
+    <!--                    {% for item in items %}-->
+    <!--                    <div class="main-container{{ loop.index }}" id="main-container">-->
+    <!--                        {%if item['Type']=='income'%}-->
+    <!--                        <div class="kl" style="background-color: green">-->
+
+    <!--                        </div>-->
+    <!--                        {%else%}-->
+    <!--                        <div class="kl" style="background-color: red">-->
+
+    <!--                        </div>-->
+    <!--                        {%endif%}-->
+    <!--                        <div id="notes-container">-->
+    <!--                          <p id="notes">{{ item['Note'] }}</p>-->
+    <!--                        </div>-->
+    <!--                        <div id="category-container">-->
+    <!--                            <p id="category-text">{{ item['Category'] }}<p>-->
+    <!--                        </div>-->
+    <!--                        <div id="mode-container">-->
+    <!--                        <p id="mode-text" style="color: white;">{{ item['Mode'] }}:</p>-->
+    <!--                        </div>-->
+    <!--                        <div id="amount-container">-->
+    <!--                            <p id="amount"><span>₹</span>{{ item['Amounts'] }}</p>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                    <div id="delete-form">-->
+    <!--                        <form method="POST" class="cross">-->
+    <!--                            <input type="text" class="delete-form" id="index-flag" name="flag" value="{{item['hello']}}"-->
+    <!--                                   style="display:none">-->
+    <!--                            <button type="submit" class="delete-div" data-index="{{ loop.index }}"><span>&#10008</span>-->
+    <!--                            </button>-->
+    <!--                        </form>-->
+    <!--                    </div>-->
+    <!--                    {% endfor %}-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            {% endfor %}-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    </div>-->
+    <!--    </div>-->
+
+
 </body>
 <script>
     if (window.history.replaceState) {
@@ -247,7 +266,7 @@
     dateDivs.forEach(function (dateDiv) {
         var outputDiv = dateDiv.querySelector('.output');
         var outputDivHeight = outputDiv.clientHeight;
-        dateDiv.style.height = (outputDivHeight + 50) + 'px'; // You can adjust the padding as needed
+        dateDiv.style.height = (outputDivHeight + 50) + 'px';
     });
     var payType = document.getElementById("pay-type-btn");
     var expenseForm = document.getElementById("form-expense");
@@ -268,13 +287,12 @@
 
     });
 
-    $("#button").click(function () {
-        $("#pay-type-btn").toggle();
-    });
-    // function openType(){
-    //     payType.style.display = "block";
-
-    // }
+    // $("#button").click(function () {
+    //     $("#pay-type-btn").toggle();
+    // });
+    function openType() {
+        payType.style.display = "flex";
+    }
     // function openIncome(){
     //     expenseForm.style.display = "none";
     //     incomeForm.style.display = "block";
@@ -286,7 +304,7 @@
     //     payType.style.display = "none";
     // }
     function closeit() {
-        payType.style.display = "block";
+        payType.style.display = "flex";
         expenseForm.style.display = "none";
         incomeForm.style.display = "none";
     }
