@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Login - SplitWise</title>
+   <link rel="stylesheet" href="{{ url_for('static',filename='register.css') }}">
+   <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='icon.ico')}}">
+</head>
+
+<body>
+   <div id="mainlogo">
+      <p class="budget">Budget</p>
+      <a><img id="logo" src="{{url_for('static', filename='BudgetBuddy_black.png')}}"></a>
+      <p class="buddy">Buddy</p>
+  </div>
+ 
+      <div class="wrapper" id="wrapper" style="margin-top: 50px;">
+         <h1 style="text-align: center;margin-top:1rem">SignUp</h1>
+         <form style="margin-top: -1rem;" action="/login" method="POST">
+            <div class="field" id="name">
+               <input type="text" required name="name">
+               <label>Name</label>
+            </div>
+            <div class="field">
+               <input type="text" required name="email">
+               <label>Email Address</label>
+            </div>
+            <div class="field">
+               <input type="text" required name="username">
+               <label>User Name</label>
+            </div>
+            <div class="field">
+               <input type="password" required name="password">
+               <label>Password</label>
+            </div>
+
+            <div class="field " style="margin-top:2rem">
+               <input type="submit" value="SignUp">
+            </div>
+            <div class="signup-link" style="margin-top:0px">
+               <a href="{{url_for('login')}}">
+                  Login
+               </a>
+            </div>
+         </form>
+      </div>
+
+   <img id="loginimg" src="{{url_for('static', filename='login.svg')}}">
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+   $(document).ready(function () {
+
+      const logo = $('#loginimg');
+      const content = $('#wrapper');
+      // Slide in from the left after a short delay
+      setTimeout(function () {
+         logo.animate({ left: '0' }, 2000);
+      }, 0);
+
+      setTimeout(function () {
+         content.animate({ left: '0' }, 2000);
+      },);
+   });
+</script>
+
+</html>
