@@ -36,6 +36,18 @@
       $("#hiddenmenu").toggle(300); 
   });
 });
+$(document).ready(function() {
+  $("#menuicon-phone").click(function() {
+      $(this).css({
+          'transform': $(this).css('transform') === 'none' ? 'rotate(90deg)' : 'none',
+          'transition': 'transform 0.5s ease-in-out'
+
+      });
+      $("#hiddenmenu").toggle(300); 
+  });
+});
+
+
 
       </script>
     <style>
@@ -242,7 +254,7 @@
             background-color: #040811;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 760px) {
             .navbar{
                 display: none;
             }
