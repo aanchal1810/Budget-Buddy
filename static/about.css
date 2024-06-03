@@ -50,10 +50,12 @@ body {
 	color: #e1e7f8;
 	padding-top: 100px;
 	text-align: justify;
-	margin-left: -16px;
-	margin-right: -16px;
+	
 }
-
+p
+{
+margin: 0px;
+}
 .our {
 	font-family: "Poppins", sans-serif;
 	font-weight: 700;
