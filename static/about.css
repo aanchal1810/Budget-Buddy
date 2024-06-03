@@ -52,9 +52,8 @@ body {
 	text-align: justify;
 	
 }
-p
-{
-font-size: 10px;
+p{
+font-size: 10px !important;
 }
 .our {
 	font-family: "Poppins", sans-serif;
