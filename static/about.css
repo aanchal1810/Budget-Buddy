@@ -45,7 +45,7 @@ body {
 
 .info {
 	width: 450px;
-	height: 7	50px;
+	height: 750px;
 	background-color: #0f0f0f;
 	color: #e1e7f8;
 	padding-top: 100px;
@@ -54,7 +54,7 @@ body {
 }
 p
 {
-margin: 0px;
+font-size: 10px;
 }
 .our {
 	font-family: "Poppins", sans-serif;
