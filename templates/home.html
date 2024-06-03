@@ -169,9 +169,9 @@
                     {% for item in items %}
                     <div class="main-container{{ loop.index }}" id="main-container1">
                         {%if item['Type']=='income'%}
-                        <div class="kl" style="background-color: green"></div>
+                        <div class="kl" style="background-color: #6BC666"></div>
                         {%else%}
-                        <div class="kl" style="background-color: red"></div>
+                        <div class="kl" style="background-color: #F44848"></div>
                         {%endif%}
                         <div id="notes-container">
                             <p id="notes">{{ item['Note'] }}</p>
