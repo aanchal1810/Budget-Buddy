@@ -114,6 +114,8 @@
 
         #graphReport{
        
+position: relative;
+           left: 35%;
             margin-top: 2%;
             display: flex;
           
@@ -176,6 +178,7 @@
             #graphReport{
                 margin-bottom: 4%;
                 justify-content: center;
+                left: 0%;
             }
             
             #monthly-btn{
@@ -206,7 +209,7 @@
 </head>
   {% include "navbar.html" %}
 <body>
-<div>
+
     <form id="graphReport" method="POST">
         <div class="dropdown1">
             <select id="monthly-btn" type="button" name="months" >
@@ -245,7 +248,7 @@
 
         <button type="submit" id="sub"><span><img id="tick" src="{{url_for('static', filename='tick.png')}}"/></span></button>
     </form>
-</div>
+
    
         <div class="pie">
         <canvas id="expense" style="width:100%;max-width:600px"></canvas>
