@@ -392,3 +392,41 @@ textarea {
   background-size: 450px 1000px;
   ;
 }
+@media (max-width: 600px) {
+  .navbar {
+      height: 6rem;
+      width: 100%;
+  }
+ 
+  .mainlogo{
+    font-size: 1.5rem;
+  }
+ 
+  #logo {
+      height: 5rem;
+      width: 5rem;
+  }
+  #menulogo {
+    height: 60px;
+    width: 65px;
+  }
+  #menulogo{
+    margin-left: 5%;
+  }
+  #hiddenmenu {
+    height: 100%;
+    width: 100%;
+    background-color: #303030;
+    text-align: center;
+    padding: 0;
+  }
+  #hiddenmenu1 {
+    margin-top: 10%;
+    background-color: #303030;
+  }
+ 
+  #hiddenmenu1 a {
+    width: 100%;
+    font-size: 1.5rem;
+  }
+}
