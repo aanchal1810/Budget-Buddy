@@ -44,12 +44,12 @@ body {
 }
 
 .info {
-    background-color:#0f0f0f;
-    height:65%;
-    width:52%;
-    top:15%;
-    left:7%;
-    text-align:justify;
+	width: 650px;
+	height: 650px;
+	background-color: #0f0f0f;
+	color: #e1e7f8;
+	padding-top: 100px;
+	text-align: justify;
 }
 
 .our {
@@ -106,8 +106,8 @@ body {
 }
 
 #logo1{
-	height: 500px;
-	width: 500px;
+	height: 750px;
+	width: 750px; 
 }
 
 .our-team .picture img {
