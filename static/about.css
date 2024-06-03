@@ -17,7 +17,7 @@ body {
 	font-style: normal;
 	display: flex;
 	flex-direction: row;
-	/* text-align: center; */
+	text-align: center;
 	justify-content: center;
 }
 
@@ -44,8 +44,8 @@ body {
 }
 
 .info {
-	width: 650px;
-	height: 650px;
+	width: 450px;
+	height: 7	50px;
 	background-color: #0f0f0f;
 	color: #e1e7f8;
 	padding-top: 100px;
