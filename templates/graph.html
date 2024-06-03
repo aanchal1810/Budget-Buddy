@@ -16,7 +16,7 @@
             font-weight: 400;
             font-style: normal;
             background-color: #040811;
-            display: flex;
+            
             flex-direction: column;
         }
 
@@ -113,9 +113,10 @@
         }
 
         #graphReport{
+       
             margin-top: 2%;
             display: flex;
-            align-self: center;
+          
         }
         button{
 
@@ -138,7 +139,7 @@
         }
         @media (max-width: 600px) {
             body {
-                display: flex;
+               
                 flex-direction: column;
             }
  
@@ -205,7 +206,7 @@
 </head>
   {% include "navbar.html" %}
 <body>
-
+<div>
     <form id="graphReport" method="POST">
         <div class="dropdown1">
             <select id="monthly-btn" type="button" name="months" >
@@ -244,6 +245,8 @@
 
         <button type="submit" id="sub"><span><img id="tick" src="{{url_for('static', filename='tick.png')}}"/></span></button>
     </form>
+</div>
+   
         <div class="pie">
         <canvas id="expense" style="width:100%;max-width:600px"></canvas>
         <canvas id="income" style="width:100%;max-width:600px; margin-left:2%;"></canvas>
