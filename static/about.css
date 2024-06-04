@@ -15,10 +15,9 @@ body {
 	font-family: "Poppins", sans-serif;
 	font-weight: 400;
 	font-style: normal;
-	display: flex;
-	flex-direction: row;
+
 	/* text-align: center; */
-	justify-content: center;
+	
 }
 
 .row {
@@ -44,13 +43,14 @@ body {
 }
 
 .info {
-    background-color:#0f0f0f;
+	background-color:#0f0f0f;
     height:65%;
     width:52%;
-    top:15%;
     left:7%;
     text-align:justify;
-    position: absolute;
+    position: relative;
+	display: inline-block;
+
 }
 
 .our {
@@ -105,11 +105,17 @@ body {
 	left: 0;
 	z-index: -1;
 }
+.logo{
+	display: inline-block;
+	height: 700px;
+	width: 550px;
+	margin-left: 10%;
+	
+	
 
-#logo1{
-	height: 750px;
-	width: 750px; 
+	
 }
+
 
 .our-team .picture img {
 	width: 100%;
@@ -164,7 +170,7 @@ body {
 	background-color: #f7f5ec;
 }
 .container1{
-	margin-top: 2%;
+	margin-top: -10%;
 	width: 100%;
 }
 
