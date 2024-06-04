@@ -53,10 +53,6 @@ def user():
         try:
             supabase.table("users1").insert(
                 {"id": id, "Name": name, "username": username, "Email": email, "password": password}).execute()
-            supabase.table("data").insert(
-                {"id": id}
-            ).execute()
-            print("hi")
             return redirect(url_for('login'))
         except Exception as e:
             error_message = "An error occurred while signing up. Please try again later."
