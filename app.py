@@ -2,17 +2,17 @@ from flask import Flask, render_template, redirect, request, url_for, session
 from supabase import create_client, client
 import random
 import json
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
-url = os.environ.get('SUPABASE_URL')
-key = os.environ.get('SUPABASE_KEY')
+SUPABASE_URL = "https://lmygmmagwjiyhyoggjmq.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" \
+               ".eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxteWdtbWFnd2ppeWh5b2dnam1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA5Mzg2Mjc" \
+               "sImV4cCI6MjAyNjUxNDYyN30.rcSqf70RtWYFLDBllaiSJh76xPHsB9gMk-93wxc3Fns"
 
+url = SUPABASE_URL
+key = SUPABASE_KEY
 supabase = create_client(url, key)
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY')
-
+app.secret_key = "devisgoat"
 
 def generate_id():
     random_digits = ''.join([str(random.randint(0, 9)) for _ in range(6)])
