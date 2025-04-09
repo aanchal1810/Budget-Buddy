@@ -47,13 +47,10 @@ def user():
         email = request.form["email"]
         password = request.form["password"]
         id = generate_id()
-        try:
-            supabase.table("users1").insert(
-                {"id": id, "Name": name, "username": username, "Email": email, "password": password}).execute()
-            return redirect(url_for('login'))
-        except Exception as e:
-            error_message = "An error occurred while signing up. Please try again later."
-            return render_template('Register.html', error=error_message)
+        supabase.table("users1").insert({"id": id, "Name": name, "username": username, "Email": email, "password": password}).execute()
+        return redirect(url_for('login'))
+
+
 
     return render_template('Register.html', name=name, password=password, email=email, username=username, id=id)
 
