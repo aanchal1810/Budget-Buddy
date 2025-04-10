@@ -22,7 +22,7 @@ i:hover {
 }
 
 .navbar {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   height: 7rem;
   width: 100%;
   background-color: #000000;
@@ -84,11 +84,10 @@ i:hover {
   position: absolute;
   z-index: 1;
   display: none;
-  height: 588px;
+  height: 630px;
   width: 200px;
   background-color: #000000;
-  font-size: small;
-  }
+}
 
 #hiddenmenu1 {
   text-align: center;
@@ -124,6 +123,8 @@ i:hover {
 #hiddenmenu1 a:hover:after {
   transform: scaleX(1);
   transform-origin: bottom left;
+
+
 }
 
 .social {
@@ -172,7 +173,7 @@ i:hover {
 
 .flex-container {
   position: absolute;
-  height: 84vh;
+  height: 100vh;
   width: 100%;
   display: -webkit-flex;
   margin-bottom: 100px;
@@ -276,8 +277,9 @@ i:hover {
 }
 
 .home {
+  background-color: #75ff85;
   height: 100vh;
-  background: url("Income_Home.png");
+  background: url("tracker.svg");
   background-size: 450px 1000px;
 }
 
@@ -362,7 +364,7 @@ i:hover {
 }
 
 .about {
-  background: url("Calendar_Home.png");
+  background: url("cal.svg");
   background-size: 450px 1000px;
 
 
@@ -382,28 +384,30 @@ textarea {
 
 .contact {
   height: 100vh;
-  background: url("Chatbot_Home.png");
+  background: url("finbot.svg");
   background-size: 450px 1000px;
+
+
+
 }
 
 .work {
-  height: 100vh;
-  background: url("Graph_Home.png");
+  height: 90vh;
+  background: url("graph.svg");
   background-size: 450px 1000px;
-  ;
 }
 @media (max-width: 600px) {
   .navbar {
       height: 6rem;
       width: 100%;
   }
- 
+
   .mainlogo{
     font-size: 1.5rem;
   }
- 
+
   #logo {
-      height: 5rem;
+      height: 5rem; 
       width: 5rem;
   }
   #menulogo {
@@ -424,7 +428,7 @@ textarea {
     margin-top: 10%;
     background-color: #303030;
   }
- 
+  
   #hiddenmenu1 a {
     width: 100%;
     font-size: 1.5rem;
