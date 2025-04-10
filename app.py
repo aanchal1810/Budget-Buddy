@@ -20,6 +20,11 @@ def generate_id():
     id_with_prefix = '69' + random_digits
     return id_with_prefix
 
+def generate_groupID():
+    random_digits = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+    groupID = '18' + random_digits
+    return groupID
+
 
 def get_month_name(month_number):
     months = {
@@ -324,7 +329,139 @@ def contactus(id):
         
         return redirect(url_for("contactus" , id=id))
     return render_template('contact_us.html' , id=id)
+@app.route('/groups/<id>', methods=["GET", "POST"])
+def groups(id):
+    name = session.get(f"name_{id}")
+    id = id
+    username = []
+    amt_paid = []
+    user_id = []
+    
+    if request.method == 'POST':
+        data = request.form
+        group_name = data.get("group_name")
+        group_id = generate_groupID()
 
+        number = int(data.get("number"))
+        for i in range(1, number + 1):
+            uname = data.get(f"person{i}_name")
+            amt = float(data.get(f"person{i}_amt"))
+
+            uid_data = supabase.table("users1").select("id").eq("username", uname).execute().data
+            if uid_data:
+                uid = uid_data[0]["id"]
+                username.append(uname)
+                amt_paid.append(amt)
+                user_id.append(uid)
+                bal = 0
+                supabase.table("group").insert({
+                    "group_id": group_id,
+                    "group_name": group_name,
+                    "member_id": uid,
+                    "amt_paid": amt,
+                    "member_username": uname,
+                    "balance": bal
+                }).execute()
+            else:
+                print(f"User {uname} not found!")
+
+    print("curent user id: ", id)
+    group_rows = supabase.table('group').select('group_id').eq('member_id', id).execute().data
+    group_ids = [g['group_id'] for g in group_rows]
+    print("Group Rows: ",group_rows)
+    print("Groups IDS: ",group_ids)
+    if group_ids:
+        all_data = supabase.table('group').select('*').in_('group_id', group_ids).execute().data
+        
+        unique_groups = {}
+        for row in all_data:
+            gid = row["group_id"]
+            if gid not in unique_groups:
+                unique_groups[gid] = {
+                    "id": gid,
+                    "group_name": row.get("group_name", "Unnamed Group"),
+                    "num_members": 0,
+                    "total_amount": 0.0
+                }
+            unique_groups[gid]["num_members"] += 1
+            unique_groups[gid]["total_amount"] += float(row.get("amt_paid", 0.0))
+
+        groups_data = list(unique_groups.values())
+    else:
+        groups_data = []
+        print("else")
+    return render_template('groups.html', id=id, name=name, groups=groups_data)
+
+
+
+@app.route('/split/<id>/<group_id>')
+def split(id, group_id):
+    group_data = supabase.table("group").select("*").eq("group_id", group_id).execute().data
+
+    if not group_data:
+        return "Group not found", 404
+    group_name = group_data[0]["group_name"]
+    total_paid = 0
+    members = []
+
+    # Calculate total paid and prepare members
+    for entry in group_data:
+        amt_paid = float(entry.get("amt_paid", 0))
+        total_paid += amt_paid
+
+    per_head = total_paid / len(group_data)
+    givers = []
+    receivers = []
+
+    for entry in group_data:
+        
+        username = entry.get("member_username")
+        uid = supabase.table("users1").select("id").eq("username", username).execute().data
+        amt_paid = float(entry.get("amt_paid", 0))
+        diff = round(per_head - amt_paid, 2)
+        supabase.table("group").update({
+        "balance": diff
+        }).eq("member_id", uid).eq("group_id", "group456").execute()
+
+        members.append({
+            "member_username": username,
+            "amt_paid": amt_paid,
+            "split": diff
+        })
+
+        if diff > 0:
+            givers.append({"name": username, "amount": diff})
+        elif diff < 0:
+            receivers.append({"name": username, "amount": -diff})
+
+    # Calculate who pays whom
+    transactions = []
+    i = j = 0
+    while i < len(givers) and j < len(receivers):
+        giver = givers[i]
+        receiver = receivers[j]
+        amt = min(giver["amount"], receiver["amount"])
+
+        transactions.append({
+            "from": giver["name"],
+            "to": receiver["name"],
+            "amount": round(amt, 2)
+        })
+
+        giver["amount"] -= amt
+        receiver["amount"] -= amt
+
+        if giver["amount"] <= 0:
+            i += 1
+        if receiver["amount"] <= 0:
+            j += 1
+
+    return render_template("split.html",
+                           group={"group_name": group_name},
+                           members=members,
+                           total_paid=round(total_paid, 2),
+                           transactions=transactions,
+                           id=id)
 if __name__ == '__main__':
     app.run(debug=True, port=1100)
 
