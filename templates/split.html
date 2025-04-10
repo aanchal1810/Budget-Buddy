@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Split Summary - {{ group.group_name }}</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #f7f7f7;
+            padding: 2rem;
+        }
+        .summary, .transactions {
+            width: 60%;
+            
+            font-family: "Poppins", sans-serif;
+            background: rgb(35, 35, 35);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: #fff;
+        }
+        h2 {
+            color: #fff;
+        }
+        ul {
+            padding-left: 1rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .owe {
+            color: #d33;
+            font-weight: bold;
+        }
+        .receive {
+            color: #2a8;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    {%include "navbar.html "%}
+<div class="summary" style="margin-top: 3%;">
+    <h2>Group: {{ group.group_name }}</h2>
+    <p><strong>Total Paid:</strong> ₹{{ total_paid }}</p>
+    <h3>Members & Contributions:</h3>
+    <ul>
+        {% for m in members %}
+        <li>
+            {{ m.member_username }} paid ₹{{ m.amt_paid }} 
+           
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="transactions">
+    <h2>Who Pays Whom</h2>
+    {% if transactions %}
+    <ul>
+        {% for t in transactions %}
+        <li><span class="owe">{{ t.from }}</span> pays <span class="receive">{{ t.to }}</span> ₹{{ '%.2f'|format(t.amount) }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Everyone is settled up!</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

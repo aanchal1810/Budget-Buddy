@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Split with Friends</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        background-color: #040811;
+        color: #e1e7f8;
+        justify-content: center;
+        align-items: center;
+      }
+      h1 {
+        font-family: "Poppins", sans-serif;
+      }
+      #header {
+        width: 100%;
+        display: flex;
+        flex-direction: rows;
+        justify-content: space-between;
+        font-family: "Poppins", sans-serif;
+        align-items: center;
+      }
+      #intro {
+        margin-left: 5rem;
+      }
+      #add {
+        margin-right: 10rem;
+        border-radius: 7px;
+        width: 200px;
+        font-family: "Poppins", sans-serif;
+        padding: 10px;
+        font-size: large;
+        background-color: #6c1d94;
+        color: white;
+      }
+      #sub {
+        border-radius: 7px;
+        width: 200px;
+        font-family: "Poppins", sans-serif;
+        padding: 5px;
+        font-size: large;
+        background-color: #6c1d94;
+        color: white;
+      }
+      #close {
+        position: absolute;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        top: 5%;
+        right: 5%;
+        font-size: 30px;
+        color: white;
+        cursor: pointer;
+      }
+      #add-form {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 999;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+      #add-group {
+        background-color: rgb(62, 60, 60);
+        padding: 3rem;
+        font-family: "Poppins", sans-serif;
+        font-size: large;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+      }
+      input {
+        margin-left: 10px;
+        padding: 5px;
+      }
+      .group-list {
+        margin-top: 3%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-left: 10%;
+        margin-bottom: 3%;
+      }
+      .group-card {
+        font-family: "Poppins", sans-serif;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        padding: 1rem;
+        width: 80%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s;
+      }
+      .group-card:hover {
+        transform: scale(1.03);
+      }
+      .group-card h2 {
+        font-size: 1.2rem;
+        margin: 0 0 0.5rem;
+      }
+      .group-details {
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+        color: #b0bad6;
+      }
+      .group-card a {
+        text-decoration: none;
+        color: #d87eff;
+        display: inline-block;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  {%include "navbar.html "%}
+  <body>
+    <div id="header">
+      <div id="intro">
+        <h1>Hello {{name}} !</h1>
+        <p>
+          Using this feature you can make groups to making splitting bills
+          easier!
+        </p>
+      </div>
+      <div>
+        <button id="add">Add New Group +</button>
+      </div>
+    </div>
+    <div id="add-form">
+      <span id="close" onclick="closeit()">x</span>
+      <form method="POST" id="add-group" action="/groups/{{id}}">
+        <div>
+          <div>
+            <label for="group_name">Group Name: </label>
+            <input type="text" name="group_name" id="group_name" />
+          </div>
+          <br />
+          <div>
+            <label for="number">Number of people in the split group: </label>
+            <input type="number" name="number" id="number" />
+          </div>
+          <br />
+          <div id="people-inputs"></div>
+          <br /><br />
+        </div>
+        <button type="submit" id="sub">Create Group</button>
+      </form>
+    </div>
+    {% if groups %}
+    <div class="group-list">
+      {% for group in groups %}
+      <div class="group-card">
+        <h2>{{ group.group_name }}</h2>
+        <div class="group-details">
+          Group ID: {{ group.id }} <br />
+          Total Members: {{ group.num_members or 'N/A' }}<br />
+          Total Amount: ₹{{ group.total_amount or '0.00' }}
+        </div>
+        <a href="/split/{{id}}/{{ group.id }}">View Group →</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>You are not part of any groups yet. Create one to get started!</p>
+    {% endif %}
+    <script>
+      if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+      }
+
+      const number = document.getElementById("number");
+      const peopleInputsDiv = document.getElementById("people-inputs");
+
+      number.addEventListener("input", () => {
+        const num = parseInt(number.value);
+        peopleInputsDiv.innerHTML = "";
+
+        if (num > 0) {
+          for (let i = 1; i <= num; i++) {
+            const personDiv = document.createElement("div");
+            personDiv.innerHTML = `
+                <label for="person${i}_name">Member ${i} Username:</label>
+                <input type="text" name="person${i}_name" id="person${i}_name" required>
+                <label for="person${i}_note">Member ${i} Transaction for:</label>
+                <input type="text" name="person${i}_note" id="person${i}_name" required>
+                <label for="person${i}_amt">Amount Paid:</label>
+                <input type="number" name="person${i}_amt" id="person${i}_amt" step="0.01" required>
+                <br><br>
+              `;
+            peopleInputsDiv.appendChild(personDiv);
+          }
+        }
+      });
+
+      document.getElementById("add-group").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        let usernames = [];
+        let amt_paid = [];
+        let total_amt = 0;
+
+        const num = parseInt(number.value);
+        for (let i = 1; i <= num; i++) {
+          const name = document.getElementById(`person${i}_name`).value;
+          const amt = parseFloat(
+            document.getElementById(`person${i}_amt`).value
+          );
+
+          usernames.push(name);
+          amt_paid.push(amt);
+          total_amt += amt;
+        }
+
+        console.log("Usernames:", usernames);
+        console.log("Amounts:", amt_paid);
+        console.log("Total Amount:", total_amt);
+
+       
+        e.target.submit(); 
+      });
+      const addForm = document.getElementById("add-form");
+      const addBtn = document.getElementById("add");
+      addBtn.addEventListener("click", () => {
+        addForm.style.display = "flex";
+      });
+      function closeit() {
+        addForm.style.display = "none";
+        document.getElementById("add-group").reset();
+        document.getElementById("people-inputs").innerHTML = ""; 
+      }
+    </script>
+  </body>
+</html>
