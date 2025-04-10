@@ -6,8 +6,9 @@
     <title>Contact Us</title>
     <link rel="stylesheet" href="{{url_for('static' , filename='contact_us.css')}}">
 </head>
+{% include "navbar.html" %}
 <body>
-    {%include "navbar.html "%}
+    
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
