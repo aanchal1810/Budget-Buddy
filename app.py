@@ -327,7 +327,7 @@ def contactus(id):
         #     print("Exception occurred:", e)
         #     flash(f"Error sending email: {e}")
         
-        return redirect(url_for("contactus" , id=id))
+        # return redirect(url_for("contactus" , id=id))
     return render_template('contact_us.html' , id=id)
 @app.route('/groups/<id>', methods=["GET", "POST"])
 def groups(id):
