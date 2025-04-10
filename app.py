@@ -1,11 +1,9 @@
-from flask import Flask, render_template, redirect, request, url_for, session,flash
+from flask import Flask, render_template, redirect, request, url_for, session
 from supabase import create_client, client
 import random
 import json
 import os
 from dotenv import load_dotenv
-import smtplib
-from email.mime.text import MIMEText
 load_dotenv()
 
 url = os.environ.get('SUPABASE_URL')
@@ -24,7 +22,6 @@ def generate_groupID():
     random_digits = ''.join([str(random.randint(0, 9)) for _ in range(6)])
     groupID = '18' + random_digits
     return groupID
-
 
 def get_month_name(month_number):
     months = {
@@ -292,43 +289,6 @@ def logout(id):
 def aboutus(id):
     return render_template("aboutus.html", id=id)
 
-DEVELOPER_EMAIL = "tiagala16@gmail.com"
-pasasword = os.environ.get('EMAIL_PASSWORD')
-@app.route('/contactus/<id>', methods=["GET", "POST"])
-def contactus(id):
-    if request.method == "POST":
-        user_email = request.form["email"]
-        user_phone =request.form["phone"]
-        user_name =request.form["name"]
-        user_message =request.form["message"]
-
-        # try:
-        #     server = smtplib.SMTP("smtp.gmail.com", 587)
-        #     # server.set_debuglevel(1)  
-        #     server.ehlo()
-        #     server.starttls()
-        #     server.ehlo()
-        #     server.login("tiagala16@gmail.com", pasasword) 
-
-        #     subject = "Expense Tracker Customer Query"
-        #     body = f"Name: {user_name}\nEmail: {user_email}\nPhone: {user_phone}\n\nMessage:\n{user_message}"
-
-        #     message = MIMEText(body)
-        #     message["Subject"] = subject
-        #     message["From"] = user_email
-        #     message["To"] = DEVELOPER_EMAIL
-
-        #     response = server.send_message(message)
-        #     print("SMTP response:", response)  
-
-        #     server.quit()
-        #     flash("Thanks! Your email was sent successfully.")
-        # except Exception as e:
-        #     print("Exception occurred:", e)
-        #     flash(f"Error sending email: {e}")
-        
-        # return redirect(url_for("contactus" , id=id))
-    return render_template('contact_us.html' , id=id)
 @app.route('/groups/<id>', methods=["GET", "POST"])
 def groups(id):
     name = session.get(f"name_{id}")
@@ -462,6 +422,9 @@ def split(id, group_id):
                            total_paid=round(total_paid, 2),
                            transactions=transactions,
                            id=id)
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=1100)
 
